@@ -1,0 +1,81 @@
+import 'package:flutter/material.dart';
+
+/// ══════════════════════════════════════════════════════════════════════════════
+///  AppPalette — EduVision Unified Color Palette
+///  مصدر الألوان الموحّد للتطبيق بأكمله
+///
+///   sage   #C9CBA3 — خلفيات فاتحة، borders
+///   peach  #FFE1A8 — chips، highlights، accents
+///   coral  #E26D5C — اللون الرئيسي، CTAs، progress
+///   plum   #723D46 — ثانوي، gradients، headers
+///   mocha  #472D30 — نصوص، header داكن
+/// ══════════════════════════════════════════════════════════════════════════════
+abstract class AppPalette {
+  AppPalette._();
+
+  // ── Core five ──────────────────────────────────────────────────────────────
+  static const Color sage  = Color(0xFFC9CBA3);
+  static const Color peach = Color(0xFFFFE1A8);
+  static const Color coral = Color(0xFFE26D5C);
+  static const Color plum  = Color(0xFF723D46);
+  static const Color mocha = Color(0xFF472D30);
+
+  // ── Derived / helpers ──────────────────────────────────────────────────────
+  static const Color sageLight  = Color(0xFFECEEE0); // scaffold background
+  static const Color coralLight = Color(0x1FE26D5C); // coral @ 12%
+  static const Color mochaLight = Color(0x14472D30); // mocha @ 8%
+  // ملاحظة: أُبقي الاسم للتوافق، لكن اللون أصبح من هوية التطبيق (المرجاني) بدل الأخضر
+  static const Color successGreen      = coral;
+  static const Color successGreenLight = coralLight;
+
+  // ── Gradients ──────────────────────────────────────────────────────────────
+  static const LinearGradient headerGradient = LinearGradient(
+    begin: Alignment.topLeft,
+    end:   Alignment.bottomRight,
+    colors: [mocha, plum],
+  );
+
+  static const LinearGradient btnGradient = LinearGradient(
+    begin: Alignment.centerLeft,
+    end:   Alignment.centerRight,
+    colors: [coral, plum],
+  );
+
+  static const LinearGradient progressGradient = LinearGradient(
+    begin: Alignment.centerLeft,
+    end:   Alignment.centerRight,
+    colors: [coral, plum],
+  );
+
+  // ── Thumbnail gradients (course cards) ────────────────────────────────────
+  static const List<List<Color>> thumbGradients = [
+    [mocha, plum],
+    [plum, Color(0xFF9B4F5A)],
+    [Color(0xFF8E5560), Color(0xFF5C3A3E)],
+    [coral, plum],
+    [Color(0xFF5A4A7A), Color(0xFF3D3360)],
+    [Color(0xFF7A5A3A), Color(0xFF5A3D22)],
+  ];
+
+  // ── Theme-aware resolvers (تدعم الوضع الليلي) ──────────────────────
+  // تُرجِع اللون المناسب تلقائيًا حسب سطوع الثيم الحالي.
+  static bool isDark(BuildContext c) =>
+      Theme.of(c).brightness == Brightness.dark;
+
+  static Color scaffold(BuildContext c) =>
+      Theme.of(c).scaffoldBackgroundColor;
+
+  static Color surface(BuildContext c) => Theme.of(c).colorScheme.surface;
+
+  static Color surfaceAlt(BuildContext c) =>
+      Theme.of(c).colorScheme.surfaceContainerHighest;
+
+  static Color textPrimary(BuildContext c) =>
+      Theme.of(c).colorScheme.onSurface;
+
+  static Color textSecondary(BuildContext c) =>
+      Theme.of(c).colorScheme.onSurface.withValues(alpha: 0.6);
+
+  static Color border(BuildContext c) =>
+      Theme.of(c).colorScheme.outlineVariant;
+}
